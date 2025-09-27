@@ -19,17 +19,25 @@
                 </div>
             </div>
             
-            <nav>
-                <ul class="nav-menu">
-                    <li><a href="#" class="active">Home</a></li>
-                    <li><a href="pages/track-appointment.html">Track Appointment</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-            
-            <div class="user-info" id="userInfo">
+            <nav class="nav-menu">
+                <a href="#home">Home</a>
+                <div class="dropdown">
+                    <a href="#services" class="dropdown-toggle">Services ▼</a>
+                    <div class="dropdown-menu">
+                        <a href="pages/cardiology.html">Cardiology</a>
+                        <a href="pages/neurology.html">Neurology</a>
+                        <a href="pages/orthopedics.html">Orthopedics</a>
+                        <a href="pages/pediatrics.html">Pediatrics</a>
+                        <a href="pages/emergency.html">Emergency Care</a>
+                        <a href="pages/radiology.html">Radiology</a>
+                    </div>
+                </div>
+                <a href="pages/about.html">About Us</a>
+                <a href="pages/contact.html">Contact</a>
+                <div class="auth-buttons">
+                    <button class="btn-secondary" onclick="openLoginModal()">Staff Login</button>
+                </div>
+            </nav>            <div class="user-info" id="userInfo">
                 <button class="btn btn-primary" onclick="showModal('loginModal')">Login</button>
             </div>
         </div>
@@ -152,13 +160,13 @@
                 <div class="nav-card">
                     <div class="nav-card-icon">📍</div>
                     <h3>Address</h3>
-                    <p>123 Healthcare Avenue<br>Medical District<br>City, State 12345</p>
+                    <p>No. 275, Deans Road<br>Colombo 10<br>Sri Lanka</p>
                 </div>
                 
                 <div class="nav-card">
                     <div class="nav-card-icon">📞</div>
                     <h3>Phone</h3>
-                    <p>Emergency: (555) 911-HELP<br>Appointments: (555) 123-CARE<br>General: (555) 123-4567</p>
+                    <p>Emergency: +94 11 269-1911<br>Appointments: +94 11 268-CARE<br>General: +94 11 268-4567</p>
                 </div>
                 
                 <div class="nav-card">
@@ -455,5 +463,54 @@
             });
         });
     </script>
+
+    <!-- Footer -->
+    <footer class="hospital-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="assets/images/icons/hospital-logo.svg" alt="ABC Hospital" class="footer-logo-img">
+                    <div>
+                        <h3>ABC Hospital</h3>
+                        <p>Your Health, Our Priority</p>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h4>Services</h4>
+                        <ul>
+                            <li><a href="pages/cardiology.html">Cardiology</a></li>
+                            <li><a href="pages/neurology.html">Neurology</a></li>
+                            <li><a href="pages/orthopedics.html">Orthopedics</a></li>
+                            <li><a href="pages/pediatrics.html">Pediatrics</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="pages/about.html">About Us</a></li>
+                            <li><a href="pages/contact.html">Contact</a></li>
+                            <li><a href="#appointment">Book Appointment</a></li>
+                            <li><a href="#services">Our Services</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Contact Info</h4>
+                        <p>📍 No. 275, Deans Road<br>Colombo 10, Sri Lanka</p>
+                        <p>📞 +94 11 268-4567</p>
+                        <p>✉️ info@abchospital.lk</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 ABC Hospital. All rights reserved.</p>
+                <p class="footer-credit">Made by <strong>ABC Virtual</strong></p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

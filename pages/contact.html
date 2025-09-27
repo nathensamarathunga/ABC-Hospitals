@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - ABC Hospital</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="../assets/images/icons/hospital-logo.svg" alt="ABC Hospital" class="logo-image">
+                <div>
+                    <h1>ABC Hospital</h1>
+                    <p>Management System</p>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="../index.html">Home</a>
+                <div class="dropdown">
+                    <a href="#services" class="dropdown-toggle">Services ▼</a>
+                    <div class="dropdown-menu">
+                        <a href="cardiology.html">Cardiology</a>
+                        <a href="neurology.html">Neurology</a>
+                        <a href="orthopedics.html">Orthopedics</a>
+                        <a href="pediatrics.html">Pediatrics</a>
+                        <a href="emergency.html">Emergency Care</a>
+                        <a href="radiology.html">Radiology</a>
+                    </div>
+                </div>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="contact-hero">
+            <div class="container">
+                <h1>Contact ABC Hospital</h1>
+                <p class="hero-subtitle">We're here to help you with all your healthcare needs</p>
+            </div>
+        </section>
+
+        <!-- Contact Information -->
+        <section class="contact-info">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-details">
+                        <h2>Get in Touch</h2>
+                        <p>Contact us for appointments, inquiries, or any healthcare-related questions. Our team is available 24/7 for emergencies.</p>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <div class="contact-text">
+                                <h3>Address</h3>
+                                <p>No. 275, Deans Road<br>Colombo 10<br>Sri Lanka</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">📞</div>
+                            <div class="contact-text">
+                                <h3>Phone Numbers</h3>
+                                <p><strong>Emergency:</strong> +94 11 269-1911<br>
+                                <strong>Appointments:</strong> +94 11 268-2273<br>
+                                <strong>General Inquiries:</strong> +94 11 268-4567<br>
+                                <strong>Pharmacy:</strong> +94 11 268-7890</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">✉️</div>
+                            <div class="contact-text">
+                                <h3>Email</h3>
+                                <p><strong>General:</strong> info@abchospital.lk<br>
+                                <strong>Appointments:</strong> appointments@abchospital.lk<br>
+                                <strong>Emergency:</strong> emergency@abchospital.lk</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">🕒</div>
+                            <div class="contact-text">
+                                <h3>Operating Hours</h3>
+                                <p><strong>Emergency Services:</strong> 24/7<br>
+                                <strong>OPD Services:</strong> 8:00 AM - 8:00 PM<br>
+                                <strong>Appointments:</strong> 9:00 AM - 5:00 PM<br>
+                                <strong>Pharmacy:</strong> 7:00 AM - 10:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form-container">
+                        <h2>Send us a Message</h2>
+                        <form class="contact-form" id="contactForm">
+                            <div class="form-group">
+                                <label for="contactName">Full Name</label>
+                                <input type="text" id="contactName" name="contactName" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contactEmail">Email Address</label>
+                                <input type="email" id="contactEmail" name="contactEmail" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contactPhone">Phone Number</label>
+                                <input type="tel" id="contactPhone" name="contactPhone" class="form-control" placeholder="+94 77 123 4567">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contactSubject">Subject</label>
+                                <select id="contactSubject" name="contactSubject" class="form-control" required>
+                                    <option value="">Select a subject</option>
+                                    <option value="appointment">Appointment Booking</option>
+                                    <option value="billing">Billing Inquiry</option>
+                                    <option value="medical">Medical Records</option>
+                                    <option value="complaint">Complaint/Feedback</option>
+                                    <option value="general">General Inquiry</option>
+                                    <option value="emergency">Emergency</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contactMessage">Message</label>
+                                <textarea id="contactMessage" name="contactMessage" class="form-control" rows="5" required placeholder="Please describe your inquiry or concern..."></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map Section -->
+        <section class="map-section">
+            <div class="container">
+                <h2>Find Us</h2>
+                <!-- Map Placeholder -->
+                <div class="map-placeholder">
+                    <p>📍 <strong>Interactive Map Needed:</strong><br>
+                    Google Maps embed showing ABC Hospital location<br>
+                    <strong>Address:</strong> No. 275, Deans Road, Colombo 10, Sri Lanka<br>
+                    <em>Embed code should be placed here</em><br>
+                    Recommended size: Full width, 400px height</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Emergency Contact -->
+        <section class="emergency-contact">
+            <div class="container">
+                <div class="emergency-banner">
+                    <div class="emergency-content">
+                        <h2>🚨 Medical Emergency?</h2>
+                        <p>For life-threatening emergencies, call immediately or visit our Emergency Department</p>
+                        <div class="emergency-actions">
+                            <a href="tel:+94112691911" class="btn btn-danger">Call Emergency: +94 11 269-1911</a>
+                            <span class="emergency-note">Available 24/7</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Department Contacts -->
+        <section class="department-contacts">
+            <div class="container">
+                <h2>Department Contacts</h2>
+                <div class="department-grid">
+                    <div class="department-contact">
+                        <img src="../assets/images/icons/cardiology.svg" alt="Cardiology" class="dept-icon">
+                        <h3>Cardiology</h3>
+                        <p>📞 +94 11 268-4501<br>✉️ cardiology@abchospital.lk</p>
+                    </div>
+                    
+                    <div class="department-contact">
+                        <img src="../assets/images/icons/neurology.svg" alt="Neurology" class="dept-icon">
+                        <h3>Neurology</h3>
+                        <p>📞 +94 11 268-4502<br>✉️ neurology@abchospital.lk</p>
+                    </div>
+                    
+                    <div class="department-contact">
+                        <img src="../assets/images/icons/orthopedics.svg" alt="Orthopedics" class="dept-icon">
+                        <h3>Orthopedics</h3>
+                        <p>📞 +94 11 268-4503<br>✉️ orthopedics@abchospital.lk</p>
+                    </div>
+                    
+                    <div class="department-contact">
+                        <img src="../assets/images/icons/pediatrics.svg" alt="Pediatrics" class="dept-icon">
+                        <h3>Pediatrics</h3>
+                        <p>📞 +94 11 268-4504<br>✉️ pediatrics@abchospital.lk</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="hospital-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="../assets/images/icons/hospital-logo.svg" alt="ABC Hospital" class="footer-logo-img">
+                    <div>
+                        <h3>ABC Hospital</h3>
+                        <p>Your Health, Our Priority</p>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h4>Services</h4>
+                        <ul>
+                            <li><a href="cardiology.html">Cardiology</a></li>
+                            <li><a href="neurology.html">Neurology</a></li>
+                            <li><a href="orthopedics.html">Orthopedics</a></li>
+                            <li><a href="pediatrics.html">Pediatrics</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="../index.html#appointment">Book Appointment</a></li>
+                            <li><a href="../index.html#services">Our Services</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Contact Info</h4>
+                        <p>📍 No. 275, Deans Road<br>Colombo 10, Sri Lanka</p>
+                        <p>📞 +94 11 268-4567</p>
+                        <p>✉️ info@abchospital.lk</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 ABC Hospital. All rights reserved.</p>
+                <p class="footer-credit">Made by <strong>ABC Virtual</strong></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Contact form handling
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const contactData = {
+                name: formData.get('contactName'),
+                email: formData.get('contactEmail'),
+                phone: formData.get('contactPhone'),
+                subject: formData.get('contactSubject'),
+                message: formData.get('contactMessage'),
+                timestamp: new Date().toISOString()
+            };
+            
+            // Store contact message (in a real application, this would be sent to a server)
+            let contacts = JSON.parse(localStorage.getItem('hospitalContacts')) || [];
+            contacts.push(contactData);
+            localStorage.setItem('hospitalContacts', JSON.stringify(contacts));
+            
+            // Show success message
+            alert('Thank you for your message! We will get back to you within 24 hours.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
