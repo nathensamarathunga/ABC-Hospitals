@@ -12,7 +12,7 @@
     <header class="header">
         <div class="header-container">
             <div class="logo">
-                <div class="logo-icon">🏥</div>
+                <img src="assets/images/icons/hospital-logo.svg" alt="ABC Hospital" class="logo-image">
                 <div>
                     <h1>ABC Hospital</h1>
                     <p>Management System</p>
@@ -91,30 +91,42 @@
                 <p>Comprehensive healthcare services with expert medical professionals</p>
             </div>
             
-            <div class="nav-cards">
+            <div class="nav-cards" id="servicesCards">
                 <div class="nav-card">
-                    <div class="nav-card-icon">❤️</div>
+                    <img src="assets/images/icons/cardiology.svg" alt="Cardiology" class="nav-card-icon">
                     <h3>Cardiology</h3>
                     <p>Heart and cardiovascular care with advanced diagnostic and treatment options.</p>
                 </div>
                 
                 <div class="nav-card">
-                    <div class="nav-card-icon">🧠</div>
+                    <img src="assets/images/icons/neurology.svg" alt="Neurology" class="nav-card-icon">
                     <h3>Neurology</h3>
                     <p>Comprehensive neurological care including brain and nervous system treatments.</p>
                 </div>
                 
                 <div class="nav-card">
-                    <div class="nav-card-icon">🦴</div>
+                    <img src="assets/images/icons/orthopedics.svg" alt="Orthopedics" class="nav-card-icon">
                     <h3>Orthopedics</h3>
                     <p>Bone, joint, and muscle care with specialized orthopedic treatments.</p>
                 </div>
                 
                 <div class="nav-card">
-                    <div class="nav-card-icon">👶</div>
+                    <img src="assets/images/icons/pediatrics.svg" alt="Pediatrics" class="nav-card-icon">
                     <h3>Pediatrics</h3>
                     <p>Specialized medical care for infants, children, and adolescents.</p>
                 </div>
+            </div>
+        </section>
+
+        <!-- Hospital Gallery Section -->
+        <section class="form-container">
+            <div class="form-header">
+                <h2>Our Facilities</h2>
+                <p>Take a virtual tour of our modern medical facility</p>
+            </div>
+            
+            <div id="hospitalGallery">
+                <!-- Gallery will be populated by JavaScript -->
             </div>
         </section>
 
@@ -289,6 +301,7 @@
     </div>
 
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/images.js"></script>
     <script>
         // Populate doctors dropdown when page loads
         document.addEventListener('DOMContentLoaded', function() {

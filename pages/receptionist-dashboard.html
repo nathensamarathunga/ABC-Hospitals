@@ -129,6 +129,7 @@
                 <table class="table" id="doctorsTable">
                     <thead>
                         <tr>
+                            <th>Photo</th>
                             <th>Doctor Name</th>
                             <th>Specialization</th>
                             <th>Schedule</th>
@@ -330,6 +331,7 @@
     </div>
 
     <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/images.js"></script>
     <script>
         // Check if user is receptionist
         if (!HospitalMS.checkAuth() || !HospitalMS.hasRole('receptionist')) {
@@ -450,7 +452,16 @@
                 const availableSlots = allTimeSlots.filter(time => !bookedTimes.includes(time));
                 
                 const row = document.createElement('tr');
-                row.innerHTML = `
+                
+                // Create photo cell
+                const photoCell = document.createElement('td');
+                if (window.ImageHelpers) {
+                    window.ImageHelpers.addDoctorAvatar(doctor.id, photoCell);
+                }
+                row.appendChild(photoCell);
+                
+                // Add other cells
+                row.innerHTML += `
                     <td>${doctor.name}</td>
                     <td>${doctor.specialization}</td>
                     <td>${doctor.schedule}</td>

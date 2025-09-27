@@ -41,6 +41,9 @@
         <!-- Doctor Profile Section -->
         <section class="welcome-section">
             <div class="welcome-content">
+                <div id="doctorProfileImage" style="margin-bottom: 1rem;">
+                    <!-- Doctor image will be added here -->
+                </div>
                 <h1>Welcome, <span id="doctorName">Doctor</span></h1>
                 <p>Specialization: <span id="doctorSpecialization">General Medicine</span></p>
                 <p>Schedule: <span id="doctorSchedule">Mon-Fri: 9:00 AM - 5:00 PM</span></p>
@@ -251,6 +254,7 @@
     </div>
 
     <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/images.js"></script>
     <script>
         // Check if user is doctor
         if (!HospitalMS.checkAuth() || !HospitalMS.hasRole('doctor')) {
@@ -294,6 +298,18 @@
             document.getElementById('doctorName').textContent = doctor.name;
             document.getElementById('doctorSpecialization').textContent = doctor.specialization;
             document.getElementById('doctorSchedule').textContent = doctor.schedule;
+            
+            // Add doctor profile image
+            if (window.ImageHelpers) {
+                const profileContainer = document.getElementById('doctorProfileImage');
+                window.ImageHelpers.addDoctorAvatar(doctor.id, profileContainer);
+                
+                // Make the avatar larger for profile
+                const avatar = profileContainer.querySelector('.doctor-avatar');
+                if (avatar) {
+                    avatar.className = 'doctor-card-avatar';
+                }
+            }
         }
 
         function loadDashboardData() {

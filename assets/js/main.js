@@ -460,6 +460,20 @@ document.addEventListener('DOMContentLoaded', function() {
     if (currentUser) {
         updateUserDisplay();
     }
+
+    // Initialize images after a short delay to ensure DOM is ready
+    setTimeout(() => {
+        if (window.ImageHelpers) {
+            // Enhance service cards with images
+            window.ImageHelpers.enhanceServiceCards();
+            
+            // Create hospital gallery
+            const galleryContainer = document.getElementById('hospitalGallery');
+            if (galleryContainer) {
+                window.ImageHelpers.createHospitalGallery(galleryContainer);
+            }
+        }
+    }, 100);
     
     // Close modals when clicking outside
     document.addEventListener('click', function(e) {
