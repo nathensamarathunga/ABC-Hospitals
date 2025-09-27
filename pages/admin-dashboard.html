@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - ABC Hospital</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232c5f7c'><path d='M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z'/></svg>">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">🏥</div>
+                <div>
+                    <h1>ABC Hospital</h1>
+                    <p>Admin Dashboard</p>
+                </div>
+            </div>
+            
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#" class="active">Dashboard</a></li>
+                    <li><a href="#doctors">Doctors</a></li>
+                    <li><a href="#receptionists">Staff</a></li>
+                    <li><a href="#appointments">Appointments</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar">A</div>
+                <span class="user-name" id="userName">Admin</span>
+                <button class="btn btn-secondary" id="logoutBtn">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Overview -->
+        <section class="nav-cards">
+            <div class="nav-card">
+                <div class="nav-card-icon">👩‍⚕️</div>
+                <h3>Total Doctors</h3>
+                <p style="font-size: 2rem; font-weight: bold; color: var(--primary-color);" id="doctorCount">0</p>
+                <button class="btn btn-primary" onclick="showSection('doctors')">Manage Doctors</button>
+            </div>
+            
+            <div class="nav-card">
+                <div class="nav-card-icon">📋</div>
+                <h3>Total Staff</h3>
+                <p style="font-size: 2rem; font-weight: bold; color: var(--secondary-color);" id="staffCount">0</p>
+                <button class="btn btn-primary" onclick="showSection('receptionists')">Manage Staff</button>
+            </div>
+            
+            <div class="nav-card">
+                <div class="nav-card-icon">📅</div>
+                <h3>Total Appointments</h3>
+                <p style="font-size: 2rem; font-weight: bold; color: var(--accent-color);" id="appointmentCount">0</p>
+                <button class="btn btn-primary" onclick="showSection('appointments')">View Appointments</button>
+            </div>
+            
+            <div class="nav-card">
+                <div class="nav-card-icon">⏰</div>
+                <h3>Pending Appointments</h3>
+                <p style="font-size: 2rem; font-weight: bold; color: var(--warning-color);" id="pendingCount">0</p>
+                <button class="btn btn-warning" onclick="showSection('appointments')">Review Pending</button>
+            </div>
+        </section>
+
+        <!-- Doctor Management Section -->
+        <section id="doctors" class="form-container">
+            <div class="form-header">
+                <h2>Doctor Management</h2>
+                <button class="btn btn-primary" onclick="showModal('addDoctorModal')">Add New Doctor</button>
+            </div>
+            
+            <div class="table-container">
+                <table class="table" id="doctorsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Specialization</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="doctorsTableBody">
+                        <!-- Doctors will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Staff Management Section -->
+        <section id="receptionists" class="form-container" style="display: none;">
+            <div class="form-header">
+                <h2>Reception Staff Management</h2>
+                <button class="btn btn-primary" onclick="showModal('addReceptionistModal')">Add New Staff</button>
+            </div>
+            
+            <div class="table-container">
+                <table class="table" id="receptionistsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Shift</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="receptionistsTableBody">
+                        <!-- Receptionists will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Appointments Section -->
+        <section id="appointments" class="form-container" style="display: none;">
+            <div class="form-header">
+                <h2>Appointment Management</h2>
+                <div class="d-flex gap-2">
+                    <select id="statusFilter" class="form-control" style="width: auto;" onchange="filterAppointments()">
+                        <option value="">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                    <select id="doctorFilter" class="form-control" style="width: auto;" onchange="filterAppointments()">
+                        <option value="">All Doctors</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <table class="table" id="appointmentsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Patient</th>
+                            <th>Doctor</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="appointmentsTableBody">
+                        <!-- Appointments will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Add Doctor Modal -->
+    <div id="addDoctorModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="hideModal('addDoctorModal')">&times;</button>
+            <div class="form-header">
+                <h2>Add New Doctor</h2>
+            </div>
+            
+            <form id="addDoctorForm">
+                <div class="form-group">
+                    <label for="doctorName">Full Name</label>
+                    <input type="text" id="doctorName" name="name" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="doctorSpecialization">Specialization</label>
+                    <select id="doctorSpecialization" name="specialization" class="form-control" required>
+                        <option value="">Select Specialization...</option>
+                        <option value="Cardiology">Cardiology</option>
+                        <option value="Neurology">Neurology</option>
+                        <option value="Orthopedics">Orthopedics</option>
+                        <option value="Pediatrics">Pediatrics</option>
+                        <option value="Dermatology">Dermatology</option>
+                        <option value="Psychiatry">Psychiatry</option>
+                        <option value="Oncology">Oncology</option>
+                        <option value="General Medicine">General Medicine</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="doctorEmail">Email</label>
+                    <input type="email" id="doctorEmail" name="email" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="doctorPhone">Phone</label>
+                    <input type="tel" id="doctorPhone" name="phone" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="doctorUsername">Username</label>
+                    <input type="text" id="doctorUsername" name="username" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="doctorPassword">Password</label>
+                    <input type="password" id="doctorPassword" name="password" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="doctorSchedule">Schedule</label>
+                    <input type="text" id="doctorSchedule" name="schedule" class="form-control" placeholder="e.g., Mon-Fri: 9:00 AM - 5:00 PM" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Add Doctor</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Receptionist Modal -->
+    <div id="addReceptionistModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="hideModal('addReceptionistModal')">&times;</button>
+            <div class="form-header">
+                <h2>Add New Reception Staff</h2>
+            </div>
+            
+            <form id="addReceptionistForm">
+                <div class="form-group">
+                    <label for="receptionistName">Full Name</label>
+                    <input type="text" id="receptionistName" name="name" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="receptionistEmail">Email</label>
+                    <input type="email" id="receptionistEmail" name="email" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="receptionistPhone">Phone</label>
+                    <input type="tel" id="receptionistPhone" name="phone" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="receptionistUsername">Username</label>
+                    <input type="text" id="receptionistUsername" name="username" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="receptionistPassword">Password</label>
+                    <input type="password" id="receptionistPassword" name="password" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="receptionistShift">Shift</label>
+                    <select id="receptionistShift" name="shift" class="form-control" required>
+                        <option value="">Select Shift...</option>
+                        <option value="Morning (8:00 AM - 4:00 PM)">Morning (8:00 AM - 4:00 PM)</option>
+                        <option value="Evening (4:00 PM - 12:00 AM)">Evening (4:00 PM - 12:00 AM)</option>
+                        <option value="Night (12:00 AM - 8:00 AM)">Night (12:00 AM - 8:00 AM)</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Add Staff</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Doctor Modal -->
+    <div id="editDoctorModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="hideModal('editDoctorModal')">&times;</button>
+            <div class="form-header">
+                <h2>Edit Doctor</h2>
+            </div>
+            
+            <form id="editDoctorForm">
+                <input type="hidden" id="editDoctorId" name="id">
+                
+                <div class="form-group">
+                    <label for="editDoctorName">Full Name</label>
+                    <input type="text" id="editDoctorName" name="name" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editDoctorSpecialization">Specialization</label>
+                    <select id="editDoctorSpecialization" name="specialization" class="form-control" required>
+                        <option value="Cardiology">Cardiology</option>
+                        <option value="Neurology">Neurology</option>
+                        <option value="Orthopedics">Orthopedics</option>
+                        <option value="Pediatrics">Pediatrics</option>
+                        <option value="Dermatology">Dermatology</option>
+                        <option value="Psychiatry">Psychiatry</option>
+                        <option value="Oncology">Oncology</option>
+                        <option value="General Medicine">General Medicine</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editDoctorEmail">Email</label>
+                    <input type="email" id="editDoctorEmail" name="email" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editDoctorPhone">Phone</label>
+                    <input type="tel" id="editDoctorPhone" name="phone" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editDoctorSchedule">Schedule</label>
+                    <input type="text" id="editDoctorSchedule" name="schedule" class="form-control" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Update Doctor</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Check if user is admin
+        if (!HospitalMS.checkAuth() || !HospitalMS.hasRole('admin')) {
+            window.location.href = '../index.html';
+        }
+
+        let currentSection = 'doctors';
+
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('section[id]').forEach(section => {
+                if (section.id !== 'nav-cards') {
+                    section.style.display = 'none';
+                }
+            });
+            
+            // Show selected section
+            const section = document.getElementById(sectionName);
+            if (section) {
+                section.style.display = 'block';
+                currentSection = sectionName;
+            }
+            
+            // Update navigation
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            const activeLink = document.querySelector(`[href="#${sectionName}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+
+        function loadDashboardData() {
+            const doctors = HospitalMS.doctors.filter(d => d.status === 'active');
+            const receptionists = HospitalMS.receptionists.filter(r => r.status === 'active');
+            const appointments = HospitalMS.appointments;
+            const pendingAppointments = appointments.filter(a => a.status === 'pending');
+            
+            document.getElementById('doctorCount').textContent = doctors.length;
+            document.getElementById('staffCount').textContent = receptionists.length;
+            document.getElementById('appointmentCount').textContent = appointments.length;
+            document.getElementById('pendingCount').textContent = pendingAppointments.length;
+            
+            loadDoctorsTable();
+            loadReceptionistsTable();
+            loadAppointmentsTable();
+            populateDoctorFilter();
+        }
+
+        function loadDoctorsTable() {
+            const tbody = document.getElementById('doctorsTableBody');
+            const doctors = HospitalMS.doctors;
+            
+            tbody.innerHTML = '';
+            
+            doctors.forEach(doctor => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${doctor.id}</td>
+                    <td>${doctor.name}</td>
+                    <td>${doctor.specialization}</td>
+                    <td>${doctor.email}</td>
+                    <td>${doctor.phone}</td>
+                    <td><span class="status-badge ${doctor.status === 'active' ? 'status-confirmed' : 'status-cancelled'}">${doctor.status}</span></td>
+                    <td>
+                        <button class="btn btn-info" onclick="editDoctor('${doctor.id}')">Edit</button>
+                        ${doctor.status === 'active' ? 
+                            `<button class="btn btn-danger" onclick="deleteDoctor('${doctor.id}')">Deactivate</button>` :
+                            `<button class="btn btn-success" onclick="activateDoctor('${doctor.id}')">Activate</button>`
+                        }
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function loadReceptionistsTable() {
+            const tbody = document.getElementById('receptionistsTableBody');
+            const receptionists = HospitalMS.receptionists;
+            
+            tbody.innerHTML = '';
+            
+            receptionists.forEach(receptionist => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${receptionist.id}</td>
+                    <td>${receptionist.name}</td>
+                    <td>${receptionist.email}</td>
+                    <td>${receptionist.phone}</td>
+                    <td>${receptionist.shift}</td>
+                    <td><span class="status-badge ${receptionist.status === 'active' ? 'status-confirmed' : 'status-cancelled'}">${receptionist.status}</span></td>
+                    <td>
+                        <button class="btn btn-info" onclick="editReceptionist('${receptionist.id}')">Edit</button>
+                        ${receptionist.status === 'active' ? 
+                            `<button class="btn btn-danger" onclick="deleteReceptionist('${receptionist.id}')">Deactivate</button>` :
+                            `<button class="btn btn-success" onclick="activateReceptionist('${receptionist.id}')">Activate</button>`
+                        }
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function loadAppointmentsTable() {
+            const tbody = document.getElementById('appointmentsTableBody');
+            const appointments = HospitalMS.getAppointments();
+            
+            tbody.innerHTML = '';
+            
+            appointments.forEach(appointment => {
+                const doctor = HospitalMS.doctors.find(d => d.id === appointment.doctorId);
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${appointment.id}</td>
+                    <td>${appointment.patientName}</td>
+                    <td>${doctor ? doctor.name : 'Unknown'}</td>
+                    <td>${HospitalMS.formatDate(appointment.appointmentDate)}</td>
+                    <td>${appointment.appointmentTime}</td>
+                    <td>${appointment.reason.substring(0, 50)}...</td>
+                    <td><span class="status-badge status-${appointment.status}">${appointment.status}</span></td>
+                    <td>
+                        <button class="btn btn-success" onclick="confirmAppointment('${appointment.id}')">Confirm</button>
+                        <button class="btn btn-danger" onclick="cancelAppointment('${appointment.id}')">Cancel</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function populateDoctorFilter() {
+            const select = document.getElementById('doctorFilter');
+            const doctors = HospitalMS.doctors.filter(d => d.status === 'active');
+            
+            select.innerHTML = '<option value="">All Doctors</option>';
+            doctors.forEach(doctor => {
+                const option = document.createElement('option');
+                option.value = doctor.id;
+                option.textContent = doctor.name;
+                select.appendChild(option);
+            });
+        }
+
+        function filterAppointments() {
+            const statusFilter = document.getElementById('statusFilter').value;
+            const doctorFilter = document.getElementById('doctorFilter').value;
+            
+            const filter = {};
+            if (statusFilter) filter.status = statusFilter;
+            if (doctorFilter) filter.doctorId = doctorFilter;
+            
+            const appointments = HospitalMS.getAppointments(filter);
+            const tbody = document.getElementById('appointmentsTableBody');
+            
+            tbody.innerHTML = '';
+            
+            appointments.forEach(appointment => {
+                const doctor = HospitalMS.doctors.find(d => d.id === appointment.doctorId);
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${appointment.id}</td>
+                    <td>${appointment.patientName}</td>
+                    <td>${doctor ? doctor.name : 'Unknown'}</td>
+                    <td>${HospitalMS.formatDate(appointment.appointmentDate)}</td>
+                    <td>${appointment.appointmentTime}</td>
+                    <td>${appointment.reason.substring(0, 50)}...</td>
+                    <td><span class="status-badge status-${appointment.status}">${appointment.status}</span></td>
+                    <td>
+                        <button class="btn btn-success" onclick="confirmAppointment('${appointment.id}')">Confirm</button>
+                        <button class="btn btn-danger" onclick="cancelAppointment('${appointment.id}')">Cancel</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function editDoctor(doctorId) {
+            const doctor = HospitalMS.doctors.find(d => d.id === doctorId);
+            if (!doctor) return;
+            
+            document.getElementById('editDoctorId').value = doctor.id;
+            document.getElementById('editDoctorName').value = doctor.name;
+            document.getElementById('editDoctorSpecialization').value = doctor.specialization;
+            document.getElementById('editDoctorEmail').value = doctor.email;
+            document.getElementById('editDoctorPhone').value = doctor.phone;
+            document.getElementById('editDoctorSchedule').value = doctor.schedule;
+            
+            HospitalMS.showModal('editDoctorModal');
+        }
+
+        function deleteDoctor(doctorId) {
+            if (confirm('Are you sure you want to deactivate this doctor?')) {
+                const result = HospitalMS.deleteDoctor(doctorId);
+                if (result.success) {
+                    HospitalMS.showAlert('Doctor deactivated successfully', 'success');
+                    loadDashboardData();
+                } else {
+                    HospitalMS.showAlert(result.message, 'danger');
+                }
+            }
+        }
+
+        function confirmAppointment(appointmentId) {
+            const result = HospitalMS.updateAppointmentStatus(appointmentId, 'confirmed');
+            if (result.success) {
+                HospitalMS.showAlert('Appointment confirmed successfully', 'success');
+                loadDashboardData();
+            } else {
+                HospitalMS.showAlert(result.message, 'danger');
+            }
+        }
+
+        function cancelAppointment(appointmentId) {
+            if (confirm('Are you sure you want to cancel this appointment?')) {
+                const result = HospitalMS.updateAppointmentStatus(appointmentId, 'cancelled');
+                if (result.success) {
+                    HospitalMS.showAlert('Appointment cancelled successfully', 'warning');
+                    loadDashboardData();
+                } else {
+                    HospitalMS.showAlert(result.message, 'danger');
+                }
+            }
+        }
+
+        // Form submissions
+        document.getElementById('addDoctorForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const doctorData = {
+                name: formData.get('name'),
+                specialization: formData.get('specialization'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                username: formData.get('username'),
+                password: formData.get('password'),
+                schedule: formData.get('schedule')
+            };
+            
+            const result = HospitalMS.registerDoctor(doctorData);
+            
+            if (result.success) {
+                HospitalMS.hideModal('addDoctorModal');
+                HospitalMS.showAlert('Doctor registered successfully', 'success');
+                e.target.reset();
+                loadDashboardData();
+            } else {
+                HospitalMS.showAlert(result.message, 'danger');
+            }
+        });
+
+        document.getElementById('editDoctorForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const doctorId = formData.get('id');
+            const updatedData = {
+                name: formData.get('name'),
+                specialization: formData.get('specialization'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                schedule: formData.get('schedule')
+            };
+            
+            const result = HospitalMS.updateDoctor(doctorId, updatedData);
+            
+            if (result.success) {
+                HospitalMS.hideModal('editDoctorModal');
+                HospitalMS.showAlert('Doctor updated successfully', 'success');
+                loadDashboardData();
+            } else {
+                HospitalMS.showAlert(result.message, 'danger');
+            }
+        });
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            HospitalMS.updateUserDisplay();
+            loadDashboardData();
+        });
+
+        // Navigation links
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    showSection(href.substring(1));
+                }
+            });
+        });
+    </script>
+</body>
+</html>

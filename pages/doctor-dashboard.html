@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard - ABC Hospital</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232c5f7c'><path d='M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z'/></svg>">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">🏥</div>
+                <div>
+                    <h1>ABC Hospital</h1>
+                    <p>Doctor Portal</p>
+                </div>
+            </div>
+            
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#" class="active">Dashboard</a></li>
+                    <li><a href="#appointments">My Appointments</a></li>
+                    <li><a href="#schedule">Schedule</a></li>
+                    <li><a href="#patients">Patients</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar">D</div>
+                <span class="user-name" id="userName">Doctor</span>
+                <button class="btn btn-secondary" id="logoutBtn">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Doctor Profile Section -->
+        <section class="welcome-section">
+            <div class="welcome-content">
+                <h1>Welcome, <span id="doctorName">Doctor</span></h1>
+                <p>Specialization: <span id="doctorSpecialization">General Medicine</span></p>
+                <p>Schedule: <span id="doctorSchedule">Mon-Fri: 9:00 AM - 5:00 PM</span></p>
+            </div>
+        </section>
+
+        <!-- Dashboard Overview -->
+        <section class="nav-cards">
+            <div class="nav-card">
+                <div class="nav-card-icon">📅</div>
+                <h3>Today's Appointments</h3>
+                <p style="font-size: 2rem; font-weight: bold; color: var(--primary-color);" id="todayAppointmentCount">0</p>
+                <button class="btn btn-primary" onclick="showSection('appointments')">View Appointments</button>
+            </div>
+            
+            <div class="nav-card">
+                <div class="nav-card-icon">⏰</div>
+                <h3>Pending Appointments</h3>
+                <p style="font-size: 2rem; font-weight: bold; color: var(--warning-color);" id="pendingAppointmentCount">0</p>
+                <button class="btn btn-warning" onclick="showSection('appointments')">Review Pending</button>
+            </div>
+            
+            <div class="nav-card">
+                <div class="nav-card-icon">✅</div>
+                <h3>Confirmed Today</h3>
+                <p style="font-size: 2rem; font-weight: bold; color: var(--success-color);" id="confirmedTodayCount">0</p>
+                <button class="btn btn-success" onclick="showSection('appointments')">View Confirmed</button>
+            </div>
+            
+            <div class="nav-card">
+                <div class="nav-card-icon">👥</div>
+                <h3>Total Patients</h3>
+                <p style="font-size: 2rem; font-weight: bold; color: var(--info-color);" id="totalPatientsCount">0</p>
+                <button class="btn btn-info" onclick="showSection('patients')">View Patients</button>
+            </div>
+        </section>
+
+        <!-- Appointments Section -->
+        <section id="appointments" class="form-container">
+            <div class="form-header">
+                <h2>My Appointments</h2>
+                <div class="d-flex gap-2">
+                    <select id="statusFilter" class="form-control" style="width: auto;" onchange="filterAppointments()">
+                        <option value="">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                    <input type="date" id="dateFilter" class="form-control" style="width: auto;" onchange="filterAppointments()">
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <table class="table" id="appointmentsTable">
+                    <thead>
+                        <tr>
+                            <th>Appointment ID</th>
+                            <th>Patient Name</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="appointmentsTableBody">
+                        <!-- Appointments will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Schedule Section -->
+        <section id="schedule" class="form-container" style="display: none;">
+            <div class="form-header">
+                <h2>Schedule Management</h2>
+                <button class="btn btn-primary" onclick="showModal('scheduleAppointmentModal')">Schedule Appointment</button>
+            </div>
+            
+            <div class="alert alert-info">
+                <strong>Note:</strong> Here you can schedule appointments for your patients and manage your availability.
+            </div>
+            
+            <!-- Calendar View (Simplified) -->
+            <div class="nav-cards">
+                <div class="nav-card">
+                    <div class="nav-card-icon">📅</div>
+                    <h3>This Week's Schedule</h3>
+                    <div id="weeklySchedule" style="text-align: left;">
+                        <!-- Weekly schedule will be populated here -->
+                    </div>
+                </div>
+                
+                <div class="nav-card">
+                    <div class="nav-card-icon">⏰</div>
+                    <h3>Available Time Slots</h3>
+                    <div id="availableSlots" style="text-align: left;">
+                        <!-- Available slots will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Patients Section -->
+        <section id="patients" class="form-container" style="display: none;">
+            <div class="form-header">
+                <h2>My Patients</h2>
+                <p>Patients who have appointments with you</p>
+            </div>
+            
+            <div class="table-container">
+                <table class="table" id="patientsTable">
+                    <thead>
+                        <tr>
+                            <th>Patient Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Last Appointment</th>
+                            <th>Total Appointments</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="patientsTableBody">
+                        <!-- Patients will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Schedule Appointment Modal -->
+    <div id="scheduleAppointmentModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="hideModal('scheduleAppointmentModal')">&times;</button>
+            <div class="form-header">
+                <h2>Schedule New Appointment</h2>
+                <p>Create a new appointment for a patient</p>
+            </div>
+            
+            <form id="scheduleAppointmentForm">
+                <div class="form-group">
+                    <label for="schedulePatientName">Patient Name</label>
+                    <input type="text" id="schedulePatientName" name="patientName" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="schedulePatientEmail">Patient Email</label>
+                    <input type="email" id="schedulePatientEmail" name="patientEmail" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="schedulePatientPhone">Patient Phone</label>
+                    <input type="tel" id="schedulePatientPhone" name="patientPhone" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="scheduleDate">Appointment Date</label>
+                    <input type="date" id="scheduleDate" name="appointmentDate" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="scheduleTime">Appointment Time</label>
+                    <select id="scheduleTime" name="appointmentTime" class="form-control" required>
+                        <option value="">Select Time...</option>
+                        <option value="09:00">9:00 AM</option>
+                        <option value="09:30">9:30 AM</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="10:30">10:30 AM</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="11:30">11:30 AM</option>
+                        <option value="14:00">2:00 PM</option>
+                        <option value="14:30">2:30 PM</option>
+                        <option value="15:00">3:00 PM</option>
+                        <option value="15:30">3:30 PM</option>
+                        <option value="16:00">4:00 PM</option>
+                        <option value="16:30">4:30 PM</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="scheduleReason">Reason/Notes</label>
+                    <textarea id="scheduleReason" name="reason" class="form-control" rows="3" required placeholder="Reason for appointment or consultation notes..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Schedule Appointment</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Appointment Details Modal -->
+    <div id="appointmentDetailsModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="hideModal('appointmentDetailsModal')">&times;</button>
+            <div class="form-header">
+                <h2>Appointment Details</h2>
+            </div>
+            
+            <div id="appointmentDetailsContent">
+                <!-- Appointment details will be populated here -->
+            </div>
+            
+            <div class="d-flex gap-2 justify-content-center">
+                <button class="btn btn-success" id="confirmAppointmentBtn">Confirm Appointment</button>
+                <button class="btn btn-danger" id="cancelAppointmentBtn">Cancel Appointment</button>
+                <button class="btn btn-secondary" onclick="hideModal('appointmentDetailsModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Check if user is doctor
+        if (!HospitalMS.checkAuth() || !HospitalMS.hasRole('doctor')) {
+            window.location.href = '../index.html';
+        }
+
+        let currentSection = 'dashboard';
+        let currentDoctorId = HospitalMS.currentUser.id;
+
+        function showSection(sectionName) {
+            // Hide all sections except overview cards
+            document.querySelectorAll('section[id]').forEach(section => {
+                if (!section.classList.contains('nav-cards') && !section.classList.contains('welcome-section')) {
+                    section.style.display = 'none';
+                }
+            });
+            
+            // Show selected section
+            if (sectionName !== 'dashboard') {
+                const section = document.getElementById(sectionName);
+                if (section) {
+                    section.style.display = 'block';
+                    currentSection = sectionName;
+                }
+            }
+            
+            // Update navigation
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            const activeLink = document.querySelector(`[href="#${sectionName}"]`) || document.querySelector('.nav-menu a[href="#"]');
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+
+        function loadDoctorProfile() {
+            const doctor = HospitalMS.currentUser;
+            
+            document.getElementById('doctorName').textContent = doctor.name;
+            document.getElementById('doctorSpecialization').textContent = doctor.specialization;
+            document.getElementById('doctorSchedule').textContent = doctor.schedule;
+        }
+
+        function loadDashboardData() {
+            const appointments = HospitalMS.getAppointments({ doctorId: currentDoctorId });
+            const today = new Date().toISOString().split('T')[0];
+            
+            const todayAppointments = appointments.filter(apt => apt.appointmentDate === today);
+            const pendingAppointments = appointments.filter(apt => apt.status === 'pending');
+            const confirmedToday = appointments.filter(apt => 
+                apt.appointmentDate === today && apt.status === 'confirmed'
+            );
+            
+            // Get unique patients
+            const uniquePatients = [...new Set(appointments.map(apt => apt.patientEmail))];
+            
+            document.getElementById('todayAppointmentCount').textContent = todayAppointments.length;
+            document.getElementById('pendingAppointmentCount').textContent = pendingAppointments.length;
+            document.getElementById('confirmedTodayCount').textContent = confirmedToday.length;
+            document.getElementById('totalPatientsCount').textContent = uniquePatients.length;
+            
+            loadAppointmentsTable();
+            loadPatientsTable();
+            loadWeeklySchedule();
+        }
+
+        function loadAppointmentsTable() {
+            const tbody = document.getElementById('appointmentsTableBody');
+            const appointments = HospitalMS.getAppointments({ doctorId: currentDoctorId });
+            
+            tbody.innerHTML = '';
+            
+            appointments.forEach(appointment => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${appointment.id}</td>
+                    <td>${appointment.patientName}</td>
+                    <td>${HospitalMS.formatDate(appointment.appointmentDate)}</td>
+                    <td>${appointment.appointmentTime}</td>
+                    <td>${appointment.reason.substring(0, 50)}${appointment.reason.length > 50 ? '...' : ''}</td>
+                    <td><span class="status-badge status-${appointment.status}">${appointment.status}</span></td>
+                    <td>
+                        <button class="btn btn-info" onclick="viewAppointmentDetails('${appointment.id}')">View</button>
+                        ${appointment.status === 'pending' ? 
+                            `<button class="btn btn-success" onclick="confirmAppointment('${appointment.id}')">Confirm</button>` : ''
+                        }
+                        ${appointment.status !== 'cancelled' ? 
+                            `<button class="btn btn-danger" onclick="cancelAppointment('${appointment.id}')">Cancel</button>` : ''
+                        }
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function loadPatientsTable() {
+            const tbody = document.getElementById('patientsTableBody');
+            const appointments = HospitalMS.getAppointments({ doctorId: currentDoctorId });
+            
+            // Group appointments by patient
+            const patientsMap = new Map();
+            
+            appointments.forEach(appointment => {
+                const patientKey = appointment.patientEmail;
+                if (!patientsMap.has(patientKey)) {
+                    patientsMap.set(patientKey, {
+                        name: appointment.patientName,
+                        email: appointment.patientEmail,
+                        phone: appointment.patientPhone,
+                        appointments: [],
+                        lastAppointment: null
+                    });
+                }
+                
+                const patient = patientsMap.get(patientKey);
+                patient.appointments.push(appointment);
+                
+                // Update last appointment
+                if (!patient.lastAppointment || 
+                    new Date(appointment.appointmentDate) > new Date(patient.lastAppointment)) {
+                    patient.lastAppointment = appointment.appointmentDate;
+                }
+            });
+            
+            tbody.innerHTML = '';
+            
+            patientsMap.forEach(patient => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${patient.name}</td>
+                    <td>${patient.email}</td>
+                    <td>${patient.phone}</td>
+                    <td>${patient.lastAppointment ? HospitalMS.formatDate(patient.lastAppointment) : 'N/A'}</td>
+                    <td>${patient.appointments.length}</td>
+                    <td>
+                        <button class="btn btn-info" onclick="viewPatientHistory('${patient.email}')">View History</button>
+                        <button class="btn btn-primary" onclick="scheduleForPatient('${patient.name}', '${patient.email}', '${patient.phone}')">Schedule</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function loadWeeklySchedule() {
+            const weeklyScheduleDiv = document.getElementById('weeklySchedule');
+            const availableSlotsDiv = document.getElementById('availableSlots');
+            
+            // Get current week appointments
+            const today = new Date();
+            const weekStart = new Date(today.setDate(today.getDate() - today.getDay()));
+            const weekEnd = new Date(today.setDate(today.getDate() - today.getDay() + 6));
+            
+            const appointments = HospitalMS.getAppointments({ doctorId: currentDoctorId });
+            const weekAppointments = appointments.filter(apt => {
+                const aptDate = new Date(apt.appointmentDate);
+                return aptDate >= weekStart && aptDate <= weekEnd;
+            });
+            
+            // Display weekly schedule
+            const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            let scheduleHTML = '';
+            
+            for (let i = 0; i < 7; i++) {
+                const currentDate = new Date(weekStart);
+                currentDate.setDate(weekStart.getDate() + i);
+                const dateStr = currentDate.toISOString().split('T')[0];
+                
+                const dayAppointments = weekAppointments.filter(apt => apt.appointmentDate === dateStr);
+                
+                scheduleHTML += `
+                    <div style="margin-bottom: 1rem; padding: 0.5rem; border-left: 3px solid var(--primary-color);">
+                        <strong>${daysOfWeek[i]} (${HospitalMS.formatDate(dateStr)})</strong><br>
+                        ${dayAppointments.length > 0 ? 
+                            dayAppointments.map(apt => `${apt.appointmentTime} - ${apt.patientName}`).join('<br>') :
+                            '<em>No appointments</em>'
+                        }
+                    </div>
+                `;
+            }
+            
+            weeklyScheduleDiv.innerHTML = scheduleHTML;
+            
+            // Display available slots for today
+            const todayStr = new Date().toISOString().split('T')[0];
+            const todayAppointments = appointments.filter(apt => apt.appointmentDate === todayStr);
+            const bookedTimes = todayAppointments.map(apt => apt.appointmentTime);
+            
+            const allTimeSlots = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30'];
+            const availableSlots = allTimeSlots.filter(time => !bookedTimes.includes(time));
+            
+            availableSlotsDiv.innerHTML = availableSlots.length > 0 ? 
+                availableSlots.map(time => `<span class="status-badge status-confirmed">${time}</span>`).join(' ') :
+                '<em>No available slots today</em>';
+        }
+
+        function filterAppointments() {
+            const statusFilter = document.getElementById('statusFilter').value;
+            const dateFilter = document.getElementById('dateFilter').value;
+            
+            const filter = { doctorId: currentDoctorId };
+            if (statusFilter) filter.status = statusFilter;
+            if (dateFilter) filter.date = dateFilter;
+            
+            const appointments = HospitalMS.getAppointments(filter);
+            const tbody = document.getElementById('appointmentsTableBody');
+            
+            tbody.innerHTML = '';
+            
+            appointments.forEach(appointment => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${appointment.id}</td>
+                    <td>${appointment.patientName}</td>
+                    <td>${HospitalMS.formatDate(appointment.appointmentDate)}</td>
+                    <td>${appointment.appointmentTime}</td>
+                    <td>${appointment.reason.substring(0, 50)}${appointment.reason.length > 50 ? '...' : ''}</td>
+                    <td><span class="status-badge status-${appointment.status}">${appointment.status}</span></td>
+                    <td>
+                        <button class="btn btn-info" onclick="viewAppointmentDetails('${appointment.id}')">View</button>
+                        ${appointment.status === 'pending' ? 
+                            `<button class="btn btn-success" onclick="confirmAppointment('${appointment.id}')">Confirm</button>` : ''
+                        }
+                        ${appointment.status !== 'cancelled' ? 
+                            `<button class="btn btn-danger" onclick="cancelAppointment('${appointment.id}')">Cancel</button>` : ''
+                        }
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function viewAppointmentDetails(appointmentId) {
+            const appointment = HospitalMS.appointments.find(apt => apt.id === appointmentId);
+            if (!appointment) return;
+            
+            const detailsContent = document.getElementById('appointmentDetailsContent');
+            detailsContent.innerHTML = `
+                <div style="text-align: left;">
+                    <p><strong>Appointment ID:</strong> ${appointment.id}</p>
+                    <p><strong>Patient Name:</strong> ${appointment.patientName}</p>
+                    <p><strong>Patient Email:</strong> ${appointment.patientEmail}</p>
+                    <p><strong>Patient Phone:</strong> ${appointment.patientPhone}</p>
+                    <p><strong>Date:</strong> ${HospitalMS.formatDate(appointment.appointmentDate)}</p>
+                    <p><strong>Time:</strong> ${appointment.appointmentTime}</p>
+                    <p><strong>Status:</strong> <span class="status-badge status-${appointment.status}">${appointment.status}</span></p>
+                    <p><strong>Reason:</strong> ${appointment.reason}</p>
+                    <p><strong>Booked Date:</strong> ${HospitalMS.formatDateTime(appointment.bookedDate)}</p>
+                    <p><strong>Booked By:</strong> ${appointment.bookedBy}</p>
+                </div>
+            `;
+            
+            // Set up action buttons
+            const confirmBtn = document.getElementById('confirmAppointmentBtn');
+            const cancelBtn = document.getElementById('cancelAppointmentBtn');
+            
+            confirmBtn.onclick = () => confirmAppointment(appointmentId);
+            cancelBtn.onclick = () => cancelAppointment(appointmentId);
+            
+            confirmBtn.style.display = appointment.status === 'pending' ? 'inline-block' : 'none';
+            cancelBtn.style.display = appointment.status !== 'cancelled' ? 'inline-block' : 'none';
+            
+            HospitalMS.showModal('appointmentDetailsModal');
+        }
+
+        function confirmAppointment(appointmentId) {
+            const result = HospitalMS.updateAppointmentStatus(appointmentId, 'confirmed');
+            if (result.success) {
+                HospitalMS.showAlert('Appointment confirmed successfully', 'success');
+                loadDashboardData();
+                HospitalMS.hideModal('appointmentDetailsModal');
+            } else {
+                HospitalMS.showAlert(result.message, 'danger');
+            }
+        }
+
+        function cancelAppointment(appointmentId) {
+            if (confirm('Are you sure you want to cancel this appointment?')) {
+                const result = HospitalMS.updateAppointmentStatus(appointmentId, 'cancelled');
+                if (result.success) {
+                    HospitalMS.showAlert('Appointment cancelled successfully', 'warning');
+                    loadDashboardData();
+                    HospitalMS.hideModal('appointmentDetailsModal');
+                } else {
+                    HospitalMS.showAlert(result.message, 'danger');
+                }
+            }
+        }
+
+        function scheduleForPatient(name, email, phone) {
+            document.getElementById('schedulePatientName').value = name;
+            document.getElementById('schedulePatientEmail').value = email;
+            document.getElementById('schedulePatientPhone').value = phone;
+            
+            // Set minimum date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('scheduleDate').min = today;
+            
+            HospitalMS.showModal('scheduleAppointmentModal');
+        }
+
+        // Form submissions
+        document.getElementById('scheduleAppointmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const appointmentData = {
+                patientName: formData.get('patientName'),
+                patientEmail: formData.get('patientEmail'),
+                patientPhone: formData.get('patientPhone'),
+                doctorId: currentDoctorId,
+                appointmentDate: formData.get('appointmentDate'),
+                appointmentTime: formData.get('appointmentTime'),
+                reason: formData.get('reason')
+            };
+            
+            const result = HospitalMS.bookAppointment(appointmentData);
+            
+            if (result.success) {
+                // Immediately confirm doctor-scheduled appointments
+                HospitalMS.updateAppointmentStatus(result.appointment.id, 'confirmed');
+                
+                HospitalMS.hideModal('scheduleAppointmentModal');
+                HospitalMS.showAlert('Appointment scheduled and confirmed successfully', 'success');
+                e.target.reset();
+                loadDashboardData();
+            } else {
+                HospitalMS.showAlert(result.message, 'danger');
+            }
+        });
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            HospitalMS.updateUserDisplay();
+            loadDoctorProfile();
+            loadDashboardData();
+            
+            // Set minimum date for schedule date
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('scheduleDate').min = today;
+        });
+
+        // Navigation links
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    showSection(href.substring(1));
+                } else {
+                    showSection('dashboard');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
